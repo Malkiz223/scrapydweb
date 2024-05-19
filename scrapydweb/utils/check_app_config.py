@@ -92,10 +92,10 @@ def check_app_config(config):
     _protocol = 'https' if config.get('ENABLE_HTTPS', False) else 'http'
     _bind = config.get('SCRAPYDWEB_BIND', '0.0.0.0')
     _bind = '127.0.0.1' if _bind == '0.0.0.0' else _bind
-    # prefix = os.getenv('SCRAPYDWEB_URL_PREFIX', '').strip('/')
-    # prefix = f'/{prefix}' if prefix else ''  # /scrapy/web/admin
-    prefix = '/scrapy/web/admin'
-    url_scrapydweb = f"{_protocol}://{_bind}:{config.get('SCRAPYDWEB_PORT', 5000)}{prefix}"
+    # root_path = os.getenv('SCRAPYDWEB_ROOT_PATH', '').strip('/')
+    # root_path = f'/{root_path}' if root_path else ''  # /scrapy/web/admin
+    root_path = '/scrapy/web/admin'
+    url_scrapydweb = f"{_protocol}://{_bind}:{config.get('SCRAPYDWEB_PORT', 5000)}{root_path}"
     config['URL_SCRAPYDWEB'] = url_scrapydweb
     handle_metadata('url_scrapydweb', config['URL_SCRAPYDWEB'])
     logger.info("Setting up URL_SCRAPYDWEB: %s", config['URL_SCRAPYDWEB'])

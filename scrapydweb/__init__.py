@@ -146,11 +146,11 @@ def handle_db(app):
 def handle_route(app):
     def register_view(view, endpoint, url_defaults_list, with_node=True, trailing_slash=True):
         view_func = view.as_view(endpoint)
-        # prefix = os.getenv('SCRAPYDWEB_URL_PREFIX', '').strip('/')  # /scrapy/web/admin
-        # prefix = f'/{prefix}' if prefix else ''
-        prefix = '/scrapy/web/admin'
+        # root_path = os.getenv('SCRAPYDWEB_ROOT_PATH', '').strip('/')  # /scrapy/web/admin
+        # root_path = f'/{root_path}' if root_path else ''
+        root_path = '/scrapy/web/admin'
         for url, defaults in url_defaults_list:
-            rule = f'{prefix}/<int:node>/%s' % url if with_node else '/%s' % url
+            rule = f'{root_path}/<int:node>/%s' % url if with_node else '/%s' % url
             if trailing_slash:
                 rule += '/'
             if not with_node:
