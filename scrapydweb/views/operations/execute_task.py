@@ -80,7 +80,7 @@ class TaskExecutor(object):
         # http://127.0.0.1:5000/1/schedule/task/
         # /1/schedule/task/
         url_schedule_task = re.sub(REPLACE_URL_NODE_PATTERN, r'/%s/' % node, self.url_schedule_task)
-        url_schedule_task = f'/scrapy/web/admin/{url_schedule_task}'
+        url_schedule_task = f'/scrapy/web/admin{url_schedule_task}'
         js = {}
         try:
             # assert '/1/' not in url_schedule_task, u"'故意出错'\r\n\"出错\"'故意出错'\r\n\"出错\""
