@@ -75,12 +75,14 @@ class TaskExecutor(object):
     def schedule_task(self, node):
         # TODO: Application was not able to create a URL adapter for request independent URL generation.
         # You might be able to fix this by setting the SERVER_NAME config variable.
-        # with app.app_context():
-        #     url_schedule_task = url_for('schedule.task', node=node)
+        with app.app_context():
+            url_schedule_task = url_for('schedule.task', node=node)
+        apscheduler_logger.info(url_schedule_task)
+        apscheduler_logger.info('12333123')
         # http://127.0.0.1:5000/1/schedule/task/
         # /1/schedule/task/
         url_schedule_task = re.sub(REPLACE_URL_NODE_PATTERN, r'/%s/' % node, self.url_schedule_task)
-        url_schedule_task = f'/scrapy/web/admin{url_schedule_task}'
+        url_schedule_task = f'/scrapy/web/admin{url_schedule_task}'  # TODO: сделать через env, застрипать слеши
         js = {}
         try:
             # assert '/1/' not in url_schedule_task, u"'故意出错'\r\n\"出错\"'故意出错'\r\n\"出错\""
