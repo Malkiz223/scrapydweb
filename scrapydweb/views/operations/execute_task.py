@@ -79,8 +79,11 @@ class TaskExecutor(object):
         #     url_schedule_task = url_for('schedule.task', node=node)
         # http://127.0.0.1:5000/1/schedule/task/
         # /1/schedule/task/
-        root_path = os.getenv('SCRAPYDWEB_ROOT_PATH', '').strip('/')  # /scrapy/web/admin
+        root_path = os.getenv('SCRAPYDWEB_ROOT_PATH', '').strip('/')  # scrapy/web/admin
         url_schedule_task = re.sub(REPLACE_URL_NODE_PATTERN, r'/%s/' % node, self.url_schedule_task)
+        apscheduler_logger.info(f'{root_path=}')
+        apscheduler_logger.info(f'{url_schedule_task=}')
+
         url_schedule_task = f'/{root_path}{url_schedule_task}'
         js = {}
         try:
