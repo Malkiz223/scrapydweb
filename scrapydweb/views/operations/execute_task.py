@@ -1,7 +1,6 @@
 # coding: utf-8
 import json
 import logging
-import os
 import re
 import time
 import traceback
@@ -9,6 +8,7 @@ import traceback
 from ...common import get_now_string, get_response_from_view, handle_metadata
 from ...models import Task, TaskResult, TaskJobResult, db
 from ...utils.scheduler import scheduler
+
 
 apscheduler_logger = logging.getLogger('apscheduler')
 
@@ -81,21 +81,13 @@ class TaskExecutor(object):
         # /1/schedule/task/
         root_path = os.getenv('SCRAPYDWEB_ROOT_PATH', '').strip('/')  # scrapy/web/admin
         url_schedule_task = re.sub(REPLACE_URL_NODE_PATTERN, r'/%s/' % node, self.url_schedule_task)
-        apscheduler_logger.info(f'{root_path=}')
-        apscheduler_logger.info(f'{url_schedule_task=}')
-
         url_schedule_task = f'/{root_path}{url_schedule_task}'
         js = {}
         try:
             # assert '/1/' not in url_schedule_task, u"'故意出错'\r\n\"出错\"'故意出错'\r\n\"出错\""
             # assert False
             # time.sleep(10)
-            apscheduler_logger.info(f'Пытались создать таску из юлра {url_schedule_task}')
-            js = get_response_from_view(url_schedule_task, auth=self.auth, data=self.data,
-                                        as_json=True)
-            apscheduler_logger.info('QWERTY')
-            apscheduler_logger.info(js)
-            apscheduler_logger.info('123456')
+            js = get_response_from_view(url_schedule_task, auth=self.auth, data=self.data, as_json=True)
             assert js['status_code'] == 200 and js['status'] == 'ok', "Request got %s" % js
         except Exception as err:
             if node not in self.nodes_to_retry:
