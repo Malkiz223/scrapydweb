@@ -87,7 +87,12 @@ class TaskExecutor(object):
             # assert '/1/' not in url_schedule_task, u"'故意出错'\r\n\"出错\"'故意出错'\r\n\"出错\""
             # assert False
             # time.sleep(10)
-            js = get_response_from_view(url_schedule_task, auth=self.auth, data=self.data, as_json=True)
+            apscheduler_logger.info(f'Пытались создать таску из юлра {url_schedule_task}')
+            js = get_response_from_view(url_schedule_task, auth=self.auth, data=self.data,
+                                        as_json=True)
+            apscheduler_logger.info('QWERTY')
+            apscheduler_logger.info(js)
+            apscheduler_logger.info('123456')
             assert js['status_code'] == 200 and js['status'] == 'ok', "Request got %s" % js
         except Exception as err:
             if node not in self.nodes_to_retry:
